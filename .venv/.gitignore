@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual envs
+venv/
+env/
+.env
+
+# IDEs
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Generated / debug
+captcha_temp.png
+captcha_processed.png
+case_details.html
+*.log
+
+# ChromeDriver and binaries
+chromedriver.exe
+tesseract.exe
+*.exe
