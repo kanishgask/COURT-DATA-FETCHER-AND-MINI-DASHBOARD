@@ -72,108 +72,121 @@ The Indian Court Case Metadata Fetcher is a web-based application designed to pr
 - pip 23.0+
 - Virtualenv (Recommended)
 
-```bash
-# Verify installations
-python --version
-pip --version
 
-Setup Steps
-Environment Setup
+Step-by-Step Setup
+Clone the repository
 
 bash
-python -m venv .venv
-source .venv/bin/activate  # Linux/Mac
-.venv\Scripts\activate    # Windows
-Dependency Installation
+git clone https://github.com/Deepak1804322/court-data-fetcher-dashboard
+cd court-dashboard
+Set up virtual environment
+
+bash
+python -m venv venv
+# Windows
+venv\Scripts\activate
+# macOS/Linux
+source venv/bin/activate
+Install dependencies
 
 bash
 pip install -r requirements.txt
-Database Initialization
+Initialize database
 
 bash
 flask init-db
-Running the Application
+Run the application
 
 bash
-flask run --host=0.0.0.0 --port=5000
+flask run
+Access the application
+Open your browser and visit:
+👉 http://localhost:5000
+
 https://screenshots/setup-terminal.png
-Figure 3: Successful Application Startup
+Figure 2: Successful application startup
 
-User Guide 📖
-Search Functionality
-Navigate to the search page
+📖 User Guide
+1. Performing a Search
+Select Case Type from dropdown (CIVIL/CRIMINAL)
 
-Fill the search form:
+Enter Case Number
 
-Case Type (Dropdown menu)
+Specify Filing Year
 
-Case Number (Text input)
+Click Search button
 
-Year (Numeric input)
-
-Click "Search" button
-
-html
-<!-- Sample Form Structure -->
-<form method="POST">
-  <select name="case_type">
-    <option value="CIVIL">Civil</option>
-    <option value="CRIMINAL">Criminal</option>
-  </select>
-  <input type="text" name="case_number" required>
-  <input type="number" name="year" min="1950" max="2025">
-  <button type="submit">Search</button>
-</form>
-Understanding Results
+2. Understanding Results
 The results page displays:
 
-Case Header
+Case header with unique identifier
 
-Court Name
+Parties section showing petitioner vs respondent
 
-Case Number
+Dates information including:
 
-Case Title
+Filing date
 
-Parties Section
+Next hearing date
 
-Petitioner
+Disposal date (if case is closed)
 
-Respondent
+Documents section with downloadable:
 
-Dates Information
+Court orders
 
-Filing Date
+Final judgments (when available)
 
-Next Hearing
+https://screenshots/results-page.png
+Figure 3: Sample case results with annotations
 
-Disposal Date (if applicable)
+3. Managing Search History
+All your searches are automatically saved in the local database. To view history:
 
-Documents Section
+bash
+sqlite3 queries.db "SELECT * FROM search_history;"
+🔌 API Reference
+The application provides RESTful endpoints for programmatic access:
 
-Downloadable orders
+GET /api/v1/search
+Parameters:
 
-Judgment copies
+case_type (string): CIVIL/CRIMINAL
 
-https://screenshots/results-annotated.png
-Figure 4: Annotated Results Page
+case_number (string): Case identifier
 
-System Architecture 🏗️
-Data Flow Diagram
-Diagram
-#<img width="648" height="516" alt="image" src="https://github.com/user-attachments/assets/ef7b3d2b-fb27-4d60-9bda-c9231366bb34" />
+year (integer): Filing year
 
+Example Request:
 
+bash
+curl -X GET "http://localhost:5000/api/v1/search?case_type=CIVIL&case_number=123&year=2023"
+Success Response (200):
 
+json
+{
+  "status": "success",
+  "data": {
+    "case_number": "123",
+    "title": "John Doe vs State of Maharashtra",
+    "filing_date": "2023-06-14",
+    "next_hearing": "2025-08-10",
+    "status": "Pending",
+    "documents": {
+      "latest_order": "https://bombayhighcourt.nic.in/orders/123.pdf"
+    }
+  }
+}
+Error Response (404):
 
+json
+{
+  "status": "error",
+  "message": "Case not found"
+}
+🗃️ Database Schema
+The application uses SQLite with the following structure:
 
-
-
-
-
-
-
-Database Schema
 sql
 CREATE TABLE search_history (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -187,27 +200,60 @@ CREATE TABLE search_history (
 
 CREATE TABLE cached_cases (
     case_hash VARCHAR(64) PRIMARY KEY,
+    court_code VARCHAR(10),
     case_data JSON NOT NULL,
     last_updated TIMESTAMP
 );
-API Documentation 📡
-Public Endpoints
-GET /api/v1/case
+🚧 Development Roadmap
+Short-Term (Q3 2024)
+Add authentication system
 
-json
-{
-  "parameters": {
-    "type": "string",
-    "number": "string",
-    "year": "integer"
-  },
-  "response": {
-    "success": "boolean",
-    "data": "object",
-    "error": "string|null"
-  }
-}
-Example Request:
+Implement case tracking alerts
 
-bash
-curl -X GET "http://localhost:5000/api/v1/case?type=CIVIL&number=123&year=2023"
+Support for 3 additional High Courts
+
+Medium-Term (Q4 2024)
+PDF text extraction for search
+
+Advanced filters (Judge name, Act)
+
+Bulk case lookup
+
+Long-Term (2025)
+AI-powered case prediction
+
+Mobile app version
+
+Integration with legal research tools
+
+🤝 Contributing Guidelines
+We welcome contributions from developers, legal professionals, and researchers:
+
+Reporting Issues
+
+Use GitHub Issues template
+
+Include steps to reproduce
+
+Attach relevant screenshots
+
+Code Contributions
+
+Fork the repository
+
+Create a feature branch
+
+Submit PR with clear description
+
+Documentation Improvements
+
+Update README
+
+Add code comments
+
+Write tutorials
+
+First-time contributors are encouraged to look for good first issue labeled tasks.
+
+📜 License
+This project is licensed under the MIT License - see the LICENSE file for details.
