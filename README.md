@@ -161,8 +161,8 @@ Figure 4: Annotated Results Page
 System Architecture 🏗️
 Data Flow Diagram
 Diagram
-Code
-<img width="622" height="495" alt="image" src="https://github.com/user-attachments/assets/d92e738e-e802-4223-8c31-13c66c15b8f5" />
+#<img width="648" height="516" alt="image" src="https://github.com/user-attachments/assets/ef7b3d2b-fb27-4d60-9bda-c9231366bb34" />
+
 
 
 
