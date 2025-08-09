@@ -135,10 +135,7 @@ Documents section with downloadable:
 
 Court orders
 
-Final judgments (when available)
 
-https://screenshots/results-page.png
-Figure 3: Sample case results with annotations
 
 3. Managing Search History
 All your searches are automatically saved in the local database. To view history:
@@ -204,6 +201,10 @@ CREATE TABLE cached_cases (
     case_data JSON NOT NULL,
     last_updated TIMESTAMP
 );
+System Architecture 🏗️
+Data Flow Diagram
+<img width="663" height="510" alt="image" src="https://github.com/user-attachments/assets/62ba3aa1-1c42-4f68-8e39-065624fd7167" />
+
 🚧 Development Roadmap
 Short-Term (Q3 2024)
 Add authentication system
@@ -229,31 +230,7 @@ Integration with legal research tools
 🤝 Contributing Guidelines
 We welcome contributions from developers, legal professionals, and researchers:
 
-Reporting Issues
 
-Use GitHub Issues template
-
-Include steps to reproduce
-
-Attach relevant screenshots
-
-Code Contributions
-
-Fork the repository
-
-Create a feature branch
-
-Submit PR with clear description
-
-Documentation Improvements
-
-Update README
-
-Add code comments
-
-Write tutorials
-
-First-time contributors are encouraged to look for good first issue labeled tasks.
 
 📜 License
 This project is licensed under the MIT License - see the LICENSE file for details.
